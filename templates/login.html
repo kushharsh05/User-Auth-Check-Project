@@ -1,57 +1,103 @@
 {% extends 'base.html' %}
-{% block title %}Login{% endblock %}
+{% block title %}Login - Auth System{% endblock %}
 
 {% block content %}
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <script>
-const supabaseClient = supabase.createClient(
-    "https://wtaildeltimfsnijurpc.supabase.co",
-    "sb_publishable_XP55nHXRNXddq3g0GtMSGg_li373IzN"
-);
-
 async function loginUser(event) {
     event.preventDefault();
-
-    const email = document.getElementById("email").value;
+    
+    const form = document.getElementById("login-form");
+    const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
+    const errorDiv = document.getElementById("error-message");
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const btnText = submitBtn.querySelector(".btn-text");
+    const btnLoading = submitBtn.querySelector(".btn-loading");
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-    });
+    // Clear previous errors
+    errorDiv.style.display = "none";
+    
+    // Disable button and show loading state
+    submitBtn.disabled = true;
+    btnText.style.display = "none";
+    btnLoading.style.display = "inline";
 
-    if (error) {
-        alert(error.message);
-    } else {
-        alert("Login successful!");
-        window.location.href = "/dashboard/";
+    try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) {
+            errorDiv.textContent = error.message;
+            errorDiv.style.display = "block";
+        } else if (data.session) {
+            // Session exists, user is authenticated
+            window.location.href = "/dashboard/";
+        } else {
+            // No session after login
+            errorDiv.textContent = "Login failed. Please try again.";
+            errorDiv.style.display = "block";
+        }
+    } catch (err) {
+        errorDiv.textContent = "An unexpected error occurred. Please try again.";
+        errorDiv.style.display = "block";
+    } finally {
+        submitBtn.disabled = false;
+        btnText.style.display = "inline";
+        btnLoading.style.display = "none";
     }
 }
 </script>
 
 <div class="card">
-    <h1>Login</h1>
-    <p class="subtitle">Welcome back 👋</p>
+    <div class="card-header">
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Sign in to your account</p>
+    </div>
 
-    <form onsubmit="loginUser(event)">
-        <label>Email*</label>
-        <input type="email" id="email" placeholder="Enter email" required>
+    <div id="error-message" class="alert alert-error" style="display: none;"></div>
 
-        <label>Password*</label>
-        <input type="password" id="password" placeholder="Enter password" required>
+    <form id="login-form" onsubmit="loginUser(event)" novalidate>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email"
+                placeholder="you@example.com" 
+                required
+                autocomplete="email"
+            >
+        </div>
 
-        <button class="primary">Login</button>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+                type="password" 
+                id="password" 
+                name="password"
+                placeholder="••••••••" 
+                required
+                autocomplete="current-password"
+            >
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+            <span class="btn-text">Sign In</span>
+            <span class="btn-loading" style="display: none;">Loading...</span>
+        </button>
     </form>
 
-    <div class="divider"></div>
+    <div class="divider">
+        <span>or</span>
+    </div>
 
-    <div class="link">
-        Don’t have an account? <a href="/register/">Sign up</a>
+    <div class="auth-link">
+        Don't have an account? <a href="/register/">Create one</a>
     </div>
 </div>
-{% load static %}
-
 
 {% endblock %}
