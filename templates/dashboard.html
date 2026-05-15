@@ -3,32 +3,162 @@
 
 {% block content %}
 
-<div class="card">
-    <div class="card-header">
-        <h1 id="welcome-title">Dashboard</h1>
-        <p class="subtitle" id="welcome-subtitle">Welcome back! 👋</p>
-    </div>
+<div style="width: 100%; max-width: 900px; margin: 0 auto;">
+    
+    <!-- Welcome Card -->
+    <div class="card" style="margin-bottom: 24px;">
+        <div class="card-header">
+            <h1 id="welcome-title">Welcome Back!</h1>
+            <p class="subtitle" id="welcome-subtitle">Great to see you again 👋</p>
+        </div>
 
-    <div style="text-align: center; margin: 32px 0;">
-        <p style="font-size: 15px; color: #a0a0b8; margin-bottom: 24px;">
-            <span id="user-status">Loading...</span>
-        </p>
-        <div id="user-info" style="background: rgba(168, 85, 247, 0.1); padding: 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid rgba(168, 85, 247, 0.2);">
-            <p style="font-size: 13px; color: #8080a0; margin-bottom: 8px;">Logged in as:</p>
-            <p style="font-size: 16px; color: #ffffff; font-weight: 600;" id="user-email">-</p>
+        <div style="background: rgba(168, 85, 247, 0.1); padding: 20px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.2); margin-bottom: 24px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <p style="font-size: 12px; color: #8080a0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Your Email</p>
+                    <p style="font-size: 14px; color: #ffffff; word-break: break-all;" id="user-email">-</p>
+                </div>
+                <div>
+                    <p style="font-size: 12px; color: #8080a0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Account Status</p>
+                    <p style="font-size: 14px; color: #51cf66; font-weight: 600;">✓ Active</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <button class="btn btn-primary" onclick="goToProfile()">
+                <span>👤</span> View Profile
+            </button>
+            <button class="btn btn-secondary" onclick="logoutUser()">
+                <span>🚪</span> Sign Out
+            </button>
         </div>
     </div>
 
-    <div class="divider"></div>
+    <!-- Account Statistics -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+        <div class="card" style="padding: 20px;">
+            <p style="font-size: 12px; color: #8080a0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Account Age</p>
+            <p style="font-size: 20px; color: #a855f7; font-weight: 700;" id="account-age">-</p>
+            <p style="font-size: 11px; color: #6b6b7f; margin-top: 6px;">Days active</p>
+        </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-        <button class="btn btn-primary" onclick="goToProfile()">
-            View Profile
-        </button>
-        <button class="btn btn-secondary" onclick="logoutUser()">
-            Sign Out
-        </button>
+        <div class="card" style="padding: 20px;">
+            <p style="font-size: 12px; color: #8080a0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Login Status</p>
+            <p style="font-size: 20px; color: #51cf66; font-weight: 700;">✓ Online</p>
+            <p style="font-size: 11px; color: #6b6b7f; margin-top: 6px;">Currently active</p>
+        </div>
+
+        <div class="card" style="padding: 20px;">
+            <p style="font-size: 12px; color: #8080a0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Security</p>
+            <p style="font-size: 20px; color: #ffd700; font-weight: 700;">⚡ Good</p>
+            <p style="font-size: 11px; color: #6b6b7f; margin-top: 6px;">Password protected</p>
+        </div>
     </div>
+
+    <!-- Recommended Features -->
+    <div class="card" style="margin-bottom: 24px;">
+        <div style="margin-bottom: 24px;">
+            <h2 style="color: #ffffff; font-size: 18px; font-weight: 700; margin-bottom: 4px;">✨ Recommended Features</h2>
+            <p style="color: #8080a0; font-size: 13px;">Explore these features to enhance your account</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <!-- Feature 1 -->
+            <div style="background: rgba(168, 85, 247, 0.1); padding: 16px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.2); cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(168, 85, 247, 0.15); this.style.borderColor='rgba(168, 85, 247, 0.4)'" onmouseout="this.style.background='rgba(168, 85, 247, 0.1); this.style.borderColor='rgba(168, 85, 247, 0.2)'">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span style="font-size: 24px;">🔒</span>
+                    <h3 style="color: #ffffff; font-size: 14px; font-weight: 600;">Two-Factor Auth</h3>
+                </div>
+                <p style="color: #a0a0b8; font-size: 12px; line-height: 1.5;">Add an extra layer of security to your account with 2FA</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div style="background: rgba(168, 85, 247, 0.1); padding: 16px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.2); cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(168, 85, 247, 0.15); this.style.borderColor='rgba(168, 85, 247, 0.4)'" onmouseout="this.style.background='rgba(168, 85, 247, 0.1); this.style.borderColor='rgba(168, 85, 247, 0.2)'">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span style="font-size: 24px;">📱</span>
+                    <h3 style="color: #ffffff; font-size: 14px; font-weight: 600;">Mobile App</h3>
+                </div>
+                <p style="color: #a0a0b8; font-size: 12px; line-height: 1.5;">Download our mobile app for on-the-go access</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div style="background: rgba(168, 85, 247, 0.1); padding: 16px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.2); cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(168, 85, 247, 0.15); this.style.borderColor='rgba(168, 85, 247, 0.4)'" onmouseout="this.style.background='rgba(168, 85, 247, 0.1); this.style.borderColor='rgba(168, 85, 247, 0.2)'">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span style="font-size: 24px;">🔗</span>
+                    <h3 style="color: #ffffff; font-size: 14px; font-weight: 600;">Connected Apps</h3>
+                </div>
+                <p style="color: #a0a0b8; font-size: 12px; line-height: 1.5;">Connect your account to third-party applications</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div style="background: rgba(168, 85, 247, 0.1); padding: 16px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.2); cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(168, 85, 247, 0.15); this.style.borderColor='rgba(168, 85, 247, 0.4)'" onmouseout="this.style.background='rgba(168, 85, 247, 0.1); this.style.borderColor='rgba(168, 85, 247, 0.2)'">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span style="font-size: 24px;">🌙</span>
+                    <h3 style="color: #ffffff; font-size: 14px; font-weight: 600;">Dark Theme</h3>
+                </div>
+                <p style="color: #a0a0b8; font-size: 12px; line-height: 1.5;">Already enjoying dark mode! 🎉</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card" style="margin-bottom: 24px;">
+        <div style="margin-bottom: 24px;">
+            <h2 style="color: #ffffff; font-size: 18px; font-weight: 700; margin-bottom: 4px;">⚡ Quick Actions</h2>
+            <p style="color: #8080a0; font-size: 13px;">Common tasks to manage your account</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+            <button class="btn btn-secondary" style="font-size: 12px; padding: 12px 16px;">
+                📧 Change Email
+            </button>
+            <button class="btn btn-secondary" style="font-size: 12px; padding: 12px 16px;">
+                🔑 Reset Password
+            </button>
+            <button class="btn btn-secondary" style="font-size: 12px; padding: 12px 16px;">
+                📥 Download Data
+            </button>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card">
+        <div style="margin-bottom: 20px;">
+            <h2 style="color: #ffffff; font-size: 18px; font-weight: 700; margin-bottom: 4px;">📋 Recent Activity</h2>
+            <p style="color: #8080a0; font-size: 13px;">Your account activity</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Activity Item 1 -->
+            <div style="display: flex; gap: 12px; padding: 12px; background: rgba(168, 85, 247, 0.05); border-radius: 8px; border-left: 3px solid #a855f7;">
+                <div style="color: #a855f7; font-size: 18px;">✓</div>
+                <div style="flex: 1;">
+                    <p style="color: #ffffff; font-size: 13px; font-weight: 500;">Logged in successfully</p>
+                    <p style="color: #8080a0; font-size: 11px; margin-top: 4px;" id="last-login">Just now</p>
+                </div>
+            </div>
+
+            <!-- Activity Item 2 -->
+            <div style="display: flex; gap: 12px; padding: 12px; background: rgba(168, 85, 247, 0.05); border-radius: 8px; border-left: 3px solid #a855f7;">
+                <div style="color: #51cf66; font-size: 18px;">🎉</div>
+                <div style="flex: 1;">
+                    <p style="color: #ffffff; font-size: 13px; font-weight: 500;">Account created</p>
+                    <p style="color: #8080a0; font-size: 11px; margin-top: 4px;" id="account-created">-</p>
+                </div>
+            </div>
+
+            <!-- Activity Item 3 -->
+            <div style="display: flex; gap: 12px; padding: 12px; background: rgba(168, 85, 247, 0.05); border-radius: 8px; border-left: 3px solid #a855f7;">
+                <div style="color: #ffd700; font-size: 18px;">⚡</div>
+                <div style="flex: 1;">
+                    <p style="color: #ffffff; font-size: 13px; font-weight: 500;">Security status: Good</p>
+                    <p style="color: #8080a0; font-size: 11px; margin-top: 4px;">Your account is secure with a strong password</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -46,15 +176,23 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Display user email
         const userEmail = session.user.email;
         const userName = session.user.user_metadata?.full_name || userEmail.split('@')[0];
+        const createdAt = new Date(session.user.created_at);
+        const now = new Date();
+        const daysActive = Math.floor((now - createdAt) / (1000 * 60 * 60 * 24));
+        const createdDate = createdAt.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
         
         document.getElementById('welcome-title').textContent = `Welcome, ${userName}!`;
         document.getElementById('welcome-subtitle').textContent = `Great to see you again 👋`;
         document.getElementById('user-email').textContent = userEmail;
-        document.getElementById('user-status').textContent = 'You are successfully logged in.';
+        document.getElementById('account-age').textContent = daysActive + '+';
+        document.getElementById('account-created').textContent = createdDate;
         
     } catch (error) {
         console.error('Error loading session:', error);
-        document.getElementById('user-status').textContent = 'Error loading user information';
     }
 });
 
