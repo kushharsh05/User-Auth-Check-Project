@@ -5,14 +5,18 @@
 
 <div class="card">
     <div class="card-header">
-        <h1>Dashboard</h1>
-        <p class="subtitle">Welcome back! 👋</p>
+        <h1 id="welcome-title">Dashboard</h1>
+        <p class="subtitle" id="welcome-subtitle">Welcome back! 👋</p>
     </div>
 
     <div style="text-align: center; margin: 32px 0;">
-        <p style="font-size: 15px; color: #4a5568; margin-bottom: 24px;">
-            You are successfully logged in.
+        <p style="font-size: 15px; color: #a0a0b8; margin-bottom: 24px;">
+            <span id="user-status">Loading...</span>
         </p>
+        <div id="user-info" style="background: rgba(168, 85, 247, 0.1); padding: 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid rgba(168, 85, 247, 0.2);">
+            <p style="font-size: 13px; color: #8080a0; margin-bottom: 8px;">Logged in as:</p>
+            <p style="font-size: 16px; color: #ffffff; font-weight: 600;" id="user-email">-</p>
+        </div>
     </div>
 
     <div class="divider"></div>
@@ -28,13 +32,29 @@
 </div>
 
 <script>
-// Check if user has active session
+// Load and display user information
 document.addEventListener('DOMContentLoaded', async function() {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    
-    if (!session) {
-        // No session, redirect to login
-        window.location.href = '/login/';
+    try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        
+        if (!session) {
+            // No session, redirect to login
+            window.location.href = '/login/';
+            return;
+        }
+
+        // Display user email
+        const userEmail = session.user.email;
+        const userName = session.user.user_metadata?.full_name || userEmail.split('@')[0];
+        
+        document.getElementById('welcome-title').textContent = `Welcome, ${userName}!`;
+        document.getElementById('welcome-subtitle').textContent = `Great to see you again 👋`;
+        document.getElementById('user-email').textContent = userEmail;
+        document.getElementById('user-status').textContent = 'You are successfully logged in.';
+        
+    } catch (error) {
+        console.error('Error loading session:', error);
+        document.getElementById('user-status').textContent = 'Error loading user information';
     }
 });
 
