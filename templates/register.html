@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+
+<script>
+const supabaseClient = supabase.createClient(
+    "https://wtaildeltimfsnijurpc.supabase.co",
+    "sb_publishable_XP55nHXRNXddq3g0GtMSGg_li373IzN"
+);
+
+async function registerUser(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        alert(error.message);
+    } else {
+        alert("Registration successful! Check email if required.");
+        window.location.href = "/";
+    }
+}
+</script>
+
+<div class="card">
+    <h1>Sign up</h1>
+    <p class="subtitle">Create your account</p>
+
+    <form onsubmit="registerUser(event)">
+        <label>Email*</label>
+        <input type="email" id="email" placeholder="Enter email" required>
+
+        <label>Password*</label>
+        <input type="password" id="password" placeholder="Create password" required>
+
+        <button class="primary">Create Account</button>
+        <button onclick="googleLogin()">Continue with Google</button>
+
+<script>
+async function googleLogin() {
+    await supabaseClient.auth.signInWithOAuth({
+        provider: 'google'
+    });
+}
+</script>
+    </form>
+
+    <div class="divider"></div>
+
+    <div class="link">
+        Already have an account? <a href="/">Login</a>
+    </div>
+</div>
+{% load static %}
+
+
+{% endblock %}

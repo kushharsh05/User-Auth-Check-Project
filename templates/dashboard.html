@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h1>Dashboard</h1>
+    <p class="subtitle">Welcome, {{ user.username }} 👋</p>
+
+    <div class="divider"></div>
+
+    <p style="color:#aaa;">You are logged in successfully.</p>
+
+    <button class="primary" onclick="window.location.href='/profile/'">
+        View Profile
+    </button>
+
+    <button class="primary" style="margin-top:10px;"
+        onclick="window.location.href='/logout/'">
+        Logout
+    </button>
+
+</div>
+{% load static %}
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="{% static 'js/config.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+const supabaseClient = supabase.createClient(
+    "https://wtaildeltimfsnijurpc.supabase.co",
+    "sb_publishable_XP55nHXRNXddq3g0GtMSGg_li373IzN"
+);
+
+async function loginUser(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        alert(error.message);
+    } else {
+        alert("Login successful!");
+        window.location.href = "/dashboard/";
+    }
+}
+</script>
+
+<div class="card">
+    <h1>Login</h1>
+    <p class="subtitle">Welcome back 👋</p>
+
+    <form onsubmit="loginUser(event)">
+        <label>Email*</label>
+        <input type="email" id="email" placeholder="Enter email" required>
+
+        <label>Password*</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+
+        <button class="primary">Login</button>
+    </form>
+
+    <div class="divider"></div>
+
+    <div class="link">
+        Don’t have an account? <a href="/register/">Sign up</a>
+    </div>
+</div>
+{% load static %}
+
+
+{% endblock %}

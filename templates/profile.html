@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h1>My Profile</h1>
+    <p class="subtitle">Manage your details</p>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="msg {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Username</label>
+        <input type="text" name="username" value="{{ user.username }}">
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ user.email }}">
+
+        <button class="primary">Update Profile</button>
+    </form>
+
+    <button class="primary" style="margin-top:10px;"
+        onclick="window.location.href='/dashboard/'">
+        Back
+    </button>
+
+</div>
+{% load static %}
+
+
+{% endblock %}
