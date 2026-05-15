@@ -129,13 +129,23 @@ async function registerUser(event) {
 }
 
 async function googleLogin() {
+    const errorDiv = document.getElementById("error-message");
+    
     try {
-        await supabaseClient.auth.signInWithOAuth({
-            provider: 'google'
+        const { data, error } = await supabaseClient.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: window.location.origin + '/dashboard/'
+            }
         });
+
+        if (error) {
+            errorDiv.textContent = "Failed to sign in with Google: " + error.message;
+            errorDiv.style.display = "block";
+        }
     } catch (err) {
-        document.getElementById("error-message").textContent = "Failed to sign in with Google.";
-        document.getElementById("error-message").style.display = "block";
+        errorDiv.textContent = "Failed to sign in with Google.";
+        errorDiv.style.display = "block";
     }
 }
 </script>
